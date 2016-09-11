@@ -25,7 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
-import com.parse.Parse;
 
 import java.net.URL;
 import java.util.List;
@@ -133,9 +132,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Parse.enableLocalDatastore(this);
-
-        Parse.initialize(this);
+        //Parse.enableLocalDatastore(this);
+        //Parse.initialize(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

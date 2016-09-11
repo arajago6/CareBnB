@@ -1,16 +1,12 @@
 package edu.iit.arajago6hawk.carebnb;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,6 +23,9 @@ import com.facebook.GraphRequestAsyncTask;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 import org.json.JSONObject;
 
@@ -87,6 +86,28 @@ public class LoginActivity extends Activity {
                         }catch (Exception e){
 
                         }
+
+
+                        // Create the ParseUser
+                        ParseUser parseUser = new ParseUser();
+                        // Set core properties
+                        parseUser.setUsername(userName);
+                        parseUser.setPassword(accessToken.toString());
+                        parseUser.setEmail("email@example.com");
+                        // Invoke signUpInBackground
+                        parseUser.signUpInBackground(new SignUpCallback() {
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    // TODO: 9/11/2016  Success routine
+                                    // Hooray! Let them use the app now.
+                                } else {
+                                    // TODO: 9/11/2016  Failure routine
+                                    // Sign up didn't succeed. Look at the ParseException
+                                    // to figure out what went wrong
+                                }
+                            }
+                        });
+
                         Intent intent = new Intent(getBaseContext(), MainActivity.class);
                         startActivity(intent);
                     }
