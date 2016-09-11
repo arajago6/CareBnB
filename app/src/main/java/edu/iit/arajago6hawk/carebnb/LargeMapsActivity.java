@@ -4,6 +4,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -14,6 +15,12 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 import java.util.List;
 
@@ -68,10 +75,37 @@ public class LargeMapsActivity extends FragmentActivity implements OnMapReadyCal
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        onLocationChanged(latitude,longitude,12);
+        // Add a marker in Sydney and move the camera; this is a dummy marker
+        //LatLng sydney = new LatLng(-34, 151);
+        ParseQuery things = new ParseQuery("Things");
+        things.whereEqualTo("name", "place");
+        things.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> listOfThings, ParseException e) {
+                if (e == null) {
+                    for (ParseObject thing : listOfThings) {
+                        // This does not require a network access.
+                        String name = thing.getParseObject("name").toString();
+                        LatLng point = new LatLng(thing.getParseGeoPoint("location").getLongitude(),
+                                thing.getParseGeoPoint("location").getLatitude());
+                        Marker m = mMap.addMarker(new MarkerOptions().position(point).title("You are here"));
+                        m.showInfoWindow();
+                    }
+                } else {
+                    //handle the error
+                    LatLng sydney = new LatLng(-34, 151);
+                }
+                /* CameraPosition cameraPosition = new CameraPosition.Builder()
+                        .target(point)      // Sets the center of the map to Mountain View
+                        .zoom(12)                   // TODO: 9/11/2016  Make it generic
+                        .bearing(90)                // Sets the orientation of the camera to east
+                        .tilt(30)                   // Sets the tilt of the camera to 30 degrees
+                        .build();                   // Creates a CameraPosition from the builder
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition)); */
+            }
+        });
+
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //onLocationChanged(latitude,longitude,12);
     }
 
     public void onLocationChanged (double latitude, double longitude, int zoom){
