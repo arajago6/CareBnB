@@ -6,6 +6,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.Html;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,9 +18,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity
     Boolean isOfferActive = false;
     Boolean isSeekActive = false;
     LocationManager mLocationManager;
+    Location location;
 
     public void displayButtonOffer(View view){
         offerPlace.setVisibility(View.VISIBLE);
@@ -68,6 +73,21 @@ public class MainActivity extends AppCompatActivity
         return bestLocation;
     }
 
+    public void takeToMapsPage(View view){
+        if (location != null) {
+            Intent main = new Intent(getApplicationContext(), MapsActivity.class);
+            Bundle b = new Bundle();
+            b.putDouble("lat", location.getLatitude());
+            b.putDouble("lng", location.getLongitude());
+            main.putExtras(b);
+            startActivity(main);
+        } else {
+            String cbMsg = "Sorry! There was some issue in getting your current location!";
+            String htmlString = " <font color=\"#0099cc\"><b><i>LOCATION ERROR</font></i></b><br/>" + cbMsg;
+            Toast.makeText(getApplicationContext(), Html.fromHtml(htmlString), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +100,7 @@ public class MainActivity extends AppCompatActivity
         seekRelief = (Button) findViewById(R.id.reliefButtonSeek);
         offerDesc = (TextView) findViewById(R.id.offerDesc);
         seekDesc = (TextView) findViewById(R.id.seekDesc);
+        location = getLastKnownLocation();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

@@ -81,6 +81,8 @@
                     android:textColor="@color/colorButtonText"
                     android:background="@drawable/accent_button"
                     android:layout_below="@+id/offerDesc"
+                    android:clickable="true"
+                    android:onClick="takeToMapsPage"
                     android:visibility="gone"
                     />
                 <Button

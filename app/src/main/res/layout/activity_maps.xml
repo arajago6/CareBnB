@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="#9E9E9E"
+    tools:context="edu.iit.arajago6hawk.carebnb.MapsActivity">
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="175dp"
+        tools:context="edu.iit.arajago6hawk.painmanager.InferenceActivity" />
+
+    <TextView
+        android:id="@+id/txtPreLoc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="We have found your location to be"
+        android:padding="10dp"
+        android:textColor="#fff"
+        android:background="@color/colorPrimary"
+        android:textSize="15dp"/>
+
+    <TextView
+        android:id="@+id/txtLoc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0.0, 0.0 "
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:textColor="#fff"
+        android:background="@color/colorPrimary"
+        android:textSize="25dp"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
+</LinearLayout>
