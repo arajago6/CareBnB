@@ -1,0 +1,59 @@
+---
+title: "CareBnB_ChicagoDemandForecast"
+author: "Chinnu Pittapally"
+date: "September 10, 2016"
+output: html_document
+---
+```{r}
+# Load libraries
+#if (!require(xlsx)) install.packages("xlsx")
+if (!require(plyr)) install.packages("plyr")
+if (!require(dplyr)) install.packages("dplyr")
+if (!require(utils)) install.packages("utils")
+
+``` 
+ 
+```{r}
+data<-read.csv("D:\\CareBnB\\Census_Data1.csv")
+
+attach(data)
+```
+#Distribution of attributes in Chicago 
+```{r}
+hist(POPULATION)
+hist(HARDSHIP.INDEX)
+hist(PER.CAPITA.INCOME)
+hist(PERCENT.AGED.25..WITHOUT.HIGH.SCHOOL.DIPLOMA)
+hist(PERCENT.AGED.UNDER.18.OR.OVER.64)
+hist(PERCENT.HOUSEHOLDS.BELOW.POVERTY)
+hist(PERCENT.OF.HOUSING.CROWDED)
+```
+
+```{r}
+library(dplyr)
+data.df <- data.frame(data)
+names(data.df)
+data1.df <- data.df[,c(1,2,7,8,9)]
+
+#create new columns
+data2.df <- mutate(data1.df,water_per_day_gallons = POPULATION*0.52,food_packets_per_day=POPULATION*2,minors_and_senior_citizen_count=POPULATION*(PERCENT.AGED.UNDER.18.OR.OVER.64/100))
+
+#select few columns
+data3.df <- data2.df[,c(2,6,7,8)] 
+#replace column name
+colnames(data3.df)[1] <- "community_name"
+
+#sort
+data4.df <- arrange(data3.df,desc(food_packets_per_day),desc(minors_and_senior_citizen_count))
+#round off 
+data4.df[,2] <- round(data4.df[,2])
+data4.df[,4] <- round(data4.df[,4])
+
+#desired data
+head(data4.df)
+```
+#export to tab delimited file 
+```{r}
+library(utils)
+write.table(data4.df, "D:\\CareBnB\\chicago_demand_data", sep="\t")
+```
