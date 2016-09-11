@@ -1,13 +1,17 @@
 package edu.iit.arajago6hawk.carebnb;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,6 +23,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -46,7 +52,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             latitude = b.getDouble("lat");
             longitude = b.getDouble("lng");
             type = b.getString("type");
-            txtLoc.setText(Double.toString(latitude)+", "+Double.toString(longitude));
+            Geocoder geoCoder = new Geocoder(getApplicationContext());
+            List<Address> matches = geoCoder.getFromLocation(latitude, longitude, 1);
+            Address bestMatch = (matches.isEmpty() ? null : matches.get(0));
+            String addressText = String.format("%s, %s, %s", bestMatch.getMaxAddressLineIndex() > 0 ? bestMatch.getAddressLine(0) : "", bestMatch.getLocality(), bestMatch.getCountryName());
+            txtLoc.setText(addressText);
         } catch (Exception e) {
         }
         // Obtain the SupportMapFragment and get notified when the map is rseady to be used.

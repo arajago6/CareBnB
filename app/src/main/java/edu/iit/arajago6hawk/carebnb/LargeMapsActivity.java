@@ -1,5 +1,7 @@
 package edu.iit.arajago6hawk.carebnb;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -12,6 +14,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.List;
 
 public class LargeMapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -37,7 +41,11 @@ public class LargeMapsActivity extends FragmentActivity implements OnMapReadyCal
             else if(type.equals("relief")){
                 txtPreLoc.setText("Showing places with free relief materials near");
             }
-            txtLoc.setText(Double.toString(latitude)+", "+Double.toString(longitude));
+            Geocoder geoCoder = new Geocoder(getApplicationContext());
+            List<Address> matches = geoCoder.getFromLocation(latitude, longitude, 1);
+            Address bestMatch = (matches.isEmpty() ? null : matches.get(0));
+            String addressText = String.format("%s, %s, %s", bestMatch.getMaxAddressLineIndex() > 0 ? bestMatch.getAddressLine(0) : "", bestMatch.getLocality(), bestMatch.getCountryName());
+            txtLoc.setText(addressText);
         } catch (Exception e) {
         }
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
