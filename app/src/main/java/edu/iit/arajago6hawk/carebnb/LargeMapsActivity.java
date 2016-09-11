@@ -5,14 +5,20 @@ import android.location.Geocoder;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.FindCallback;
@@ -20,6 +26,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.List;
@@ -31,6 +38,8 @@ public class LargeMapsActivity extends FragmentActivity implements OnMapReadyCal
     private double longitude = 0.0;
     private String type="";
     TextView txtLoc, txtPreLoc;
+    LatLngBounds.Builder b;
+    ArrayList<LatLng> listOfPoints;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,41 +80,42 @@ public class LargeMapsActivity extends FragmentActivity implements OnMapReadyCal
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera; this is a dummy marker
-        //LatLng sydney = new LatLng(-34, 151);
+    @Override
+    public void onMapReady(GoogleMap map) {
+        mMap = map;
+        b = new LatLngBounds.Builder();
         ParseQuery things = new ParseQuery("Things");
-        things.whereEqualTo("name", "place");
+        if(type.equals("place")){
+            things.whereEqualTo("name", "place");
+        }
+        else{
+            things.whereNotEqualTo("name", "place");
+        }
         things.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> listOfThings, ParseException e) {
                 if (e == null) {
+                    listOfPoints = new ArrayList<LatLng>();
+                    Log.d("CB",Integer.toString(listOfThings.size()));
                     for (ParseObject thing : listOfThings) {
+                        String name = thing.get("name").toString();
+                        String quantity = thing.get("quantity").toString();
                         // This does not require a network access.
-                        String name = thing.getParseObject("name").toString();
-                        LatLng point = new LatLng(thing.getParseGeoPoint("location").getLongitude(),
-                                thing.getParseGeoPoint("location").getLatitude());
-                        Marker m = mMap.addMarker(new MarkerOptions().position(point).title("You are here"));
-                        m.showInfoWindow();
+                        LatLng pt = new LatLng( thing.getParseGeoPoint("location").getLatitude(),
+                                thing.getParseGeoPoint("location").getLongitude());
+                        mMap.addMarker(new MarkerOptions()
+                                .position(pt)
+                                .title(name+" / "+quantity)).setTag(0);
+                        b.include(pt);
+
                     }
-                } else {
-                    //handle the error
-                    LatLng sydney = new LatLng(-34, 151);
+                    LatLngBounds bounds = b.build();
+                    //Change the padding as per needed
+                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 0);
+                    mMap.animateCamera(cu);
                 }
-                /* CameraPosition cameraPosition = new CameraPosition.Builder()
-                        .target(point)      // Sets the center of the map to Mountain View
-                        .zoom(12)                   // TODO: 9/11/2016  Make it generic
-                        .bearing(90)                // Sets the orientation of the camera to east
-                        .tilt(30)                   // Sets the tilt of the camera to 30 degrees
-                        .build();                   // Creates a CameraPosition from the builder
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition)); */
             }
         });
-
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        //onLocationChanged(latitude,longitude,12);
     }
 
     public void onLocationChanged (double latitude, double longitude, int zoom){
@@ -120,6 +130,8 @@ public class LargeMapsActivity extends FragmentActivity implements OnMapReadyCal
                     .tilt(30)                   // Sets the tilt of the camera to 30 degrees
                     .build();                   // Creates a CameraPosition from the builder
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+
         }
         catch(Exception e){
 

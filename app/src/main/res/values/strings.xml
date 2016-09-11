@@ -8,10 +8,10 @@
     <string name="part_prompt">Choose the relief materials you have</string>
 
     <string-array name="part_array">
-        <item>Food</item>
-        <item>Water</item>
-        <item>Blankets</item>
-        <item>Medicine</item>
+        <item>food</item>
+        <item>water</item>
+        <item>blankets</item>
+        <item>medicine</item>
     </string-array>
 
     <string name="title_activity_login">CareBnB</string>

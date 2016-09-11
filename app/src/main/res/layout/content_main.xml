@@ -47,11 +47,11 @@
         card_view:cardCornerRadius="4dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:clickable="true"
         android:onClick="displayButtonOffer"
-        android:layout_below="@+id/entice">
+        android:layout_below="@+id/card_seek">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -138,11 +138,11 @@
         android:id="@+id/card_seek"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/card_offer"
         card_view:cardCornerRadius="4dp"
         android:layout_margin="10dp"
         android:clickable="true"
-        android:onClick="displayButtonSeek">
+        android:onClick="displayButtonSeek"
+        android:layout_below="@+id/entice">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -222,5 +222,44 @@
             </RelativeLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/card_seek1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/card_offer"
+        card_view:cardCornerRadius="4dp"
+        android:layout_margin="10dp"
+        android:clickable="true">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/help"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:id="@+id/imageView31" />
+
+            <TextView
+                android:id="@+id/descSeek1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text=" WHERE YOUR HELP IS NEEDED "
+                android:padding="15dp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:layout_toRightOf="@+id/imageView31"
+                android:textSize="16dp" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
 
 </RelativeLayout>

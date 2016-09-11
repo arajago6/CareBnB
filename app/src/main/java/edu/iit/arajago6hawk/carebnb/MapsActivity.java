@@ -1,5 +1,6 @@
 package edu.iit.arajago6hawk.carebnb;
 
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -87,6 +88,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 Things.put("quantity", Integer.parseInt(editText.getText().toString()));
                 Things.saveInBackground();
+                String cbMsg = "The offer has been added to the central database.";
+                String htmlString = " <font color=\"#27AD80\"><b><i>POST SUCCESS</font></i></b><br/>" + cbMsg;
+                Toast.makeText(getApplicationContext(), Html.fromHtml(htmlString), Toast.LENGTH_SHORT).show();
+                onBackPressed();
             }
         });
 
