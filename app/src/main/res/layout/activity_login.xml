@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context="edu.iit.arajago6hawk.carebnb.LoginActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Care BnB"
+        android:textColor="@color/colorAccent"
+        android:id="@+id/sl_textView"
+        android:textSize="75dp"
+        android:layout_alignParentTop="true"
+        android:paddingTop="210dp"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Skip Login"
+        android:id="@+id/skip_button"
+        android:background="@drawable/accent_button"
+        android:textColor="@color/colorButtonText"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Login with Facebook"
+        android:id="@+id/login_button"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/accent_button"
+        android:textColor="@color/colorButtonText"
+        android:layout_above="@+id/skip_button"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

@@ -7,7 +7,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:animateLayoutChanges="true"
-    android:background="#C4E6EB"
+    android:background="#9E9E9E"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="edu.iit.arajago6hawk.carebnb.MainActivity"
     tools:showIn="@layout/app_bar_main">
@@ -19,7 +19,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:cardCornerRadius="4dp"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:onClick="displayButtonOffer">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -28,7 +30,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/health_care"
+                android:src="@drawable/hand"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
                 android:id="@+id/imageViewOffer" />
@@ -37,7 +39,7 @@
                 android:id="@+id/descOffer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_vertical"
                 android:text=" I AM OFFERING HELP "
                 android:padding="15dp"
                 android:textColor="@color/colorPrimary"
@@ -52,6 +54,19 @@
                 android:layout_centerHorizontal="true"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp">
+                <TextView
+                    android:id="@+id/offerDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text=" What are you offering?! "
+                    android:layout_centerHorizontal="true"
+                    android:padding="8dp"
+                    android:background="@color/colorPrimary"
+                    android:textColor="#FFF"
+                    android:textStyle="bold|italic"
+                    android:textSize="16dp"
+                    android:visibility="gone"/>
                 <Button
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="250dp"
@@ -59,10 +74,14 @@
                     android:text="      Place to Stay      "
                     android:paddingLeft="6dp"
                     android:paddingRight="6dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:id="@+id/placeButtonOffer"
-                    android:textColor="#FFF"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/colorButtonText"
                     android:background="@drawable/accent_button"
+                    android:layout_below="@+id/offerDesc"
+                    android:visibility="gone"
                     />
                 <Button
                     style="?android:attr/buttonStyleSmall"
@@ -73,9 +92,11 @@
                     android:paddingRight="6dp"
                     android:layout_marginBottom="10dp"
                     android:id="@+id/reliefButtonOffer"
-                    android:textColor="#FFF"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/colorButtonText"
                     android:background="@drawable/accent_button"
                     android:layout_below="@+id/placeButtonOffer"
+                    android:visibility="gone"
                     />
             </RelativeLayout>
         </RelativeLayout>
@@ -89,7 +110,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/card_offer"
         card_view:cardCornerRadius="4dp"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:onClick="displayButtonSeek">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -98,7 +121,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/health_care"
+                android:src="@drawable/hand_rev"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
                 android:id="@+id/imageView3" />
@@ -122,6 +145,19 @@
                 android:layout_centerHorizontal="true"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp">
+                <TextView
+                    android:id="@+id/seekDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text=" What are you seeking?! "
+                    android:layout_centerHorizontal="true"
+                    android:padding="8dp"
+                    android:background="@color/colorPrimary"
+                    android:textColor="#FFF"
+                    android:textStyle="bold|italic"
+                    android:textSize="16dp"
+                    android:visibility="gone"/>
                 <Button
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="250dp"
@@ -129,10 +165,14 @@
                     android:text="      Place to Stay      "
                     android:paddingLeft="6dp"
                     android:paddingRight="6dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:id="@+id/placeButtonSeek"
-                    android:textColor="#FFF"
+                    android:textColor="@color/colorButtonText"
                     android:background="@drawable/accent_button"
+                    android:layout_below="@+id/seekDesc"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="gone"
                     />
                 <Button
                     style="?android:attr/buttonStyleSmall"
@@ -143,9 +183,11 @@
                     android:paddingRight="6dp"
                     android:layout_marginBottom="10dp"
                     android:id="@+id/reliefButtonSeek"
-                    android:textColor="#FFF"
+                    android:textColor="@color/colorButtonText"
                     android:background="@drawable/accent_button"
                     android:layout_below="@+id/placeButtonSeek"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="gone"
                     />
             </RelativeLayout>
         </RelativeLayout>

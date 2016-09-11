@@ -1,5 +1,8 @@
 package edu.iit.arajago6hawk.carebnb;
 
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,9 +15,58 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    Button offerPlace, seekPlace, offerRelief, seekRelief;
+    TextView offerDesc, seekDesc;
+    Boolean isOfferActive = false;
+    Boolean isSeekActive = false;
+    LocationManager mLocationManager;
+
+    public void displayButtonOffer(View view){
+        offerPlace.setVisibility(View.VISIBLE);
+        offerRelief.setVisibility(View.VISIBLE);
+        offerDesc.setVisibility(View.VISIBLE);
+        isOfferActive = true;
+    }
+
+    public void displayButtonSeek(View view){
+        seekPlace.setVisibility(View.VISIBLE);
+        seekRelief.setVisibility(View.VISIBLE);
+        seekDesc.setVisibility(View.VISIBLE);
+        isSeekActive = true;
+    }
+
+    // Routine to get user location.
+    private Location getLastKnownLocation() {
+        mLocationManager = (LocationManager)getApplicationContext().getSystemService(LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            try {
+                Location l = mLocationManager.getLastKnownLocation(provider);
+                if (l == null) {
+                    continue;
+                }
+                if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                    // Found best last known location: %s", l);
+                    bestLocation = l;
+                }
+            }
+            catch(SecurityException e){
+
+            }
+        }
+        return bestLocation;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +74,23 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        offerPlace = (Button) findViewById(R.id.placeButtonOffer);
+        seekPlace = (Button) findViewById(R.id.placeButtonSeek);
+        offerRelief = (Button) findViewById(R.id.reliefButtonOffer);
+        seekRelief = (Button) findViewById(R.id.reliefButtonSeek);
+        offerDesc = (TextView) findViewById(R.id.offerDesc);
+        seekDesc = (TextView) findViewById(R.id.seekDesc);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                String msg = "Hey, have you tried the new CareBnB app?!\nTry today at play.google.com!";
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, msg);
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
             }
         });
 
@@ -44,11 +106,25 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        if(isOfferActive==true){
+            offerPlace.setVisibility(View.GONE);
+            offerRelief.setVisibility(View.GONE);
+            offerDesc.setVisibility(View.GONE);
+            isOfferActive = false;
+        }
+        else if(isSeekActive==true){
+            seekPlace.setVisibility(View.GONE);
+            seekRelief.setVisibility(View.GONE);
+            seekDesc.setVisibility(View.GONE);
+            isSeekActive = false;
+        }
+        else {
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
