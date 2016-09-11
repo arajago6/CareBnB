@@ -4,13 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:animateLayoutChanges="true"
     android:background="#9E9E9E"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="edu.iit.arajago6hawk.carebnb.MainActivity"
     tools:showIn="@layout/app_bar_main">
+
+    <TextView
+        android:id="@+id/salutation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text=" Hello there! "
+        android:layout_centerHorizontal="true"
+        android:paddingTop="14dp"
+        android:paddingLeft="14dp"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="#FFF"
+        android:textStyle="bold"
+        android:textSize="24dp" />
+
+    <TextView
+        android:id="@+id/entice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Your area is under disaster.&#10;Would you like to help/get help?!"
+        android:paddingBottom="14dp"
+        android:paddingTop="6dp"
+        android:paddingLeft="14dp"
+        android:textStyle="italic"
+        android:textColor="#FFF"
+        android:background="@color/colorPrimaryDark"
+        android:layout_below="@+id/salutation"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -21,7 +47,8 @@
         card_view:cardCornerRadius="4dp"
         android:layout_margin="10dp"
         android:clickable="true"
-        android:onClick="displayButtonOffer">
+        android:onClick="displayButtonOffer"
+        android:layout_below="@+id/entice">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
