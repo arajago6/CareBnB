@@ -21,4 +21,5 @@
     <string name="facebook_app_id">142670992852290</string>
     <string name="parse_application_id">xPYHXw9v2dLp5XPWxR94F6rOFbgyiZABf2a3IdYy</string>
     <string name="parse_client_key">bLEMYPfBBkddKMH1GISM6azduznTZN8nMwCymvp5</string>
+    <string name="title_activity_large_maps">Map</string>
 </resources>
