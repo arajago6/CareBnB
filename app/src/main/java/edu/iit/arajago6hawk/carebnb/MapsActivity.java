@@ -2,7 +2,12 @@ package edu.iit.arajago6hawk.carebnb;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -13,23 +18,33 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.w3c.dom.Text;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private double latitude = 0.0;
     private double longitude = 0.0;
-    TextView txtLoc;
+    private String type = "";
+    TextView txtLoc, firstText, startText;
+    Spinner spinner;
+    EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         txtLoc = (TextView) findViewById(R.id.txtLoc);
+        firstText = (TextView) findViewById(R.id.firstText);
+        startText = (TextView) findViewById(R.id.startText);
+        spinner = (Spinner) findViewById(R.id.spinner);
+        editText = (EditText) findViewById(R.id.editText);
 
         try {
             Bundle b = getIntent().getExtras();
             latitude = b.getDouble("lat");
             longitude = b.getDouble("lng");
+            type = b.getString("type");
             txtLoc.setText(Double.toString(latitude)+", "+Double.toString(longitude));
         } catch (Exception e) {
         }
@@ -37,6 +52,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        if(type.equals("place")){
+            firstText.setVisibility(View.GONE);
+            spinner.setVisibility(View.GONE);
+        } else if (type.equals("relief")){
+            firstText.setVisibility(View.VISIBLE);
+            spinner.setVisibility(View.VISIBLE);
+            startText.setText("How many people can your current relief material serve?!");
+        }
+
     }
 
 

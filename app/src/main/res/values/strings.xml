@@ -5,6 +5,14 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="part_prompt">Choose the relief materials you have</string>
+
+    <string-array name="part_array">
+        <item>Food</item>
+        <item>Water</item>
+        <item>Blankets</item>
+        <item>Medicine</item>
+    </string-array>
 
     <string name="title_activity_login">CareBnB</string>
     <string name="dummy_button">Dummy Button</string>

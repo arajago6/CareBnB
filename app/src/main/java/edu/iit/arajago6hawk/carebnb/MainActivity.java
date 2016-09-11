@@ -102,12 +102,13 @@ public class MainActivity extends AppCompatActivity
         return bestLocation;
     }
 
-    public void takeToMapsPage(View view){
+    public void takeToSmallMapsPage(String type){
         if (location != null) {
             Intent main = new Intent(getApplicationContext(), MapsActivity.class);
             Bundle b = new Bundle();
             b.putDouble("lat", location.getLatitude());
             b.putDouble("lng", location.getLongitude());
+            b.putString("type",type);
             main.putExtras(b);
             startActivity(main);
         } else {
@@ -154,6 +155,18 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        offerPlace.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                takeToSmallMapsPage("place");
+            }
+        });
+
+        offerRelief.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                takeToSmallMapsPage("relief");
+            }
+        });
     }
 
     @Override
