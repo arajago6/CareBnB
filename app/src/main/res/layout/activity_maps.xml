@@ -14,7 +14,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="175dp"
-        tools:context="edu.iit.arajago6hawk.painmanager.InferenceActivity" />
+        tools:context="edu.iit.arajago6hawk.carebnb.MapsActivity" />
 
     <TextView
         android:id="@+id/txtPreLoc"
