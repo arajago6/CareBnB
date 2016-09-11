@@ -1,13 +1,12 @@
 package edu.iit.arajago6hawk.carebnb;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.text.Html;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,8 +16,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import org.w3c.dom.Text;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -29,7 +28,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     TextView txtLoc, firstText, startText;
     Spinner spinner;
     EditText editText;
-
+    Button submitButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +38,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startText = (TextView) findViewById(R.id.startText);
         spinner = (Spinner) findViewById(R.id.spinner);
         editText = (EditText) findViewById(R.id.editText);
+        submitButton = (Button) findViewById(R.id.submitButton);
 
         try {
             Bundle b = getIntent().getExtras();
@@ -61,6 +61,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             spinner.setVisibility(View.VISIBLE);
             startText.setText("How many people can your current relief material serve?!");
         }
+
+        //OnCLick Listener Event
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                ParseObject Things = new ParseObject("Things");
+                ParseGeoPoint point = new ParseGeoPoint(latitude, longitude);
+                Things.put("location", point);
+                if(type.equals("place")){
+                    Things.put("name", type);
+                }
+                else{
+                    Things.put("name", spinner.getSelectedItem());
+                }
+                Things.put("quantity", Integer.parseInt(editText.getText().toString()));
+                Things.saveInBackground();
+            }
+        });
 
     }
 

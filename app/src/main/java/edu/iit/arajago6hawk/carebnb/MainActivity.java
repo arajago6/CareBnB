@@ -26,7 +26,6 @@ import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.parse.Parse;
-import com.parse.ParseObject;
 
 import java.net.URL;
 import java.util.List;
@@ -121,10 +120,6 @@ public class MainActivity extends AppCompatActivity
         Parse.enableLocalDatastore(this);
 
         Parse.initialize(this);
-
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
