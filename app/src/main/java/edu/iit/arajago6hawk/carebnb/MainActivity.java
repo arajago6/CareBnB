@@ -114,6 +114,22 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    public void takeToLargeMapsPage(String type){
+        if (location != null) {
+            Intent main = new Intent(getApplicationContext(), LargeMapsActivity.class);
+            Bundle b = new Bundle();
+            b.putDouble("lat", location.getLatitude());
+            b.putDouble("lng", location.getLongitude());
+            b.putString("type",type);
+            main.putExtras(b);
+            startActivity(main);
+        } else {
+            String cbMsg = "Sorry! There was some issue in getting your current location!";
+            String htmlString = " <font color=\"#0099cc\"><b><i>LOCATION ERROR</font></i></b><br/>" + cbMsg;
+            Toast.makeText(getApplicationContext(), Html.fromHtml(htmlString), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -166,6 +182,18 @@ public class MainActivity extends AppCompatActivity
         offerRelief.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 takeToSmallMapsPage("relief");
+            }
+        });
+
+        seekPlace.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                takeToLargeMapsPage("place");
+            }
+        });
+
+        seekRelief.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                takeToLargeMapsPage("relief");
             }
         });
     }
