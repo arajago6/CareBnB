@@ -129,6 +129,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    public void takeToDemandPage(View view){
+        Intent main = new Intent(getApplicationContext(), DemandActivity.class);
+        startActivity(main);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
